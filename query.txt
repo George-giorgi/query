@@ -207,3 +207,78 @@ ALTER TABLE public."Item"
   REFERENCES public."UnitMeasure" ("UnitMeasureId");
 
 
+
+//// iooo 
+-- Switch to your target database (in psql or pgAdmin's dropdown):
+-- \c your_database_name;
+
+-- Enable extension if needed for uuid_generate_v4():
+-- CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
+
+CREATE TABLE public."Material" (
+    -- SQL Server [uniqueidentifier] -> PostgreSQL uuid
+    -- Default uses uuid_generate_v4() from uuid-ossp
+    "MaterialId"         uuid          NOT NULL DEFAULT uuid_generate_v4(),
+    
+    -- SQL Server [nvarchar](255) -> PostgreSQL varchar(255)
+    "Name"               varchar(255),
+    "Site"               varchar(255)  DEFAULT 'DEFAULT',
+    "Description"        varchar(255),
+    "PartNo"             varchar(255),
+
+    -- SQL Server [decimal](18,5) -> PostgreSQL numeric(18,5)
+    "Cost"               numeric(18, 5),
+    "CostMethod"         varchar(50),
+
+    -- These columns were [nvarchar](50) in SQL Server
+    "Weight"             varchar(50),
+    "WeightMethod"       varchar(50),
+    "Warehouse"          varchar(50),
+    "Conversion"         varchar(50),
+
+    "ParentRowId"        integer,
+    "PictogramGroup"     varchar(50),
+    "MaterialGroup"      varchar(50),
+    "MaterialClass"      varchar(50),
+    "Standard"           varchar(50),
+    "Grade"              varchar(50),
+    "Dim1Prefix"         varchar(50),
+
+    -- SQL Server [decimal](18,3) -> PostgreSQL numeric(18,3)
+    "Dim1"               numeric(18, 3),
+    "Dim1Suffix"         varchar(50),
+    "Dim2Prefix"         varchar(50),
+    "Dim2"               numeric(18, 3),
+    "Dim2Suffix"         varchar(50),
+    "Dim3Prefix"         varchar(50),
+    "Dim3"               numeric(18, 3),
+    "Dim3Suffix"         varchar(50),
+    "Dim4Prefix"         varchar(50),
+    "Dim4"               numeric(18, 3),
+    "Dim4Suffix"         varchar(50),
+    "MassDensity"        numeric(18, 2),
+
+    -- SQL Server [bit] -> PostgreSQL boolean
+    "Prefered"           boolean       NOT NULL DEFAULT true,
+    "NestingMaterial"    varchar(50),
+    "UseEnteredMaterial" boolean       NOT NULL DEFAULT true,
+
+    -- IDENTITY(1,1) -> GENERATED ALWAYS AS IDENTITY
+    "RowId"              integer       GENERATED ALWAYS AS IDENTITY NOT NULL,
+
+    -- SQL Server [timestamp] (rowversion) -> PostgreSQL bytea
+    "Timestamp"          bytea,
+
+    -- decimal(18,2) NOT NULL with default 0
+    "CutTime"            numeric(18,2) NOT NULL DEFAULT 0,
+
+    -- SQL Server nvarchar(max) -> PostgreSQL text
+    "CostFormula"        text,
+
+    -- PRIMARY KEY on MaterialId
+    CONSTRAINT "PK_Material" PRIMARY KEY ("MaterialId")
+);
+
+
+
+
