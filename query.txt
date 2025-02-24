@@ -1,1 +1,209 @@
-Hello
+-- Make sure you're using the correct database:
+-- \c your_database_name;
+
+-- Extension for UUID generation (if needed):
+-- CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
+
+CREATE TABLE public."Item" (
+    -- SQL Server's [uniqueidentifier] -> PostgreSQL UUID
+    "ItemId"               uuid                NOT NULL DEFAULT uuid_generate_v4(),
+
+    -- SQL Server [nvarchar](...) -> PostgreSQL varchar(...)
+    "PartNo"               varchar(255)        NOT NULL,
+    -- SQL Server [real] remains 'real' in Postgres
+    "Rev"                  real                NOT NULL,
+
+    "Description1"         varchar(255),
+    "Description2"         varchar(255),
+    "Description3"         varchar(255),
+    "Classification"       varchar(255),
+    "CreatedBy"            varchar(50),
+
+    -- SQL Server [datetime] -> PostgreSQL timestamp (no time zone)
+    "CreatedOn"            timestamp,
+    "Material"             varchar(255),
+    "Length"               numeric(15, 5),
+    "Width"                numeric(15, 5),
+    "Thickness"            numeric(15, 5),
+    "Weight"               real,
+    "Volume"               real,
+    "Hours"                real,
+    "UnitMeasure"          varchar(50),
+    "Status"               varchar(50),
+
+    -- SQL Server [bit] -> PostgreSQL boolean
+    "Ncr"                  boolean NOT NULL DEFAULT false,
+    "Obs"                  boolean NOT NULL DEFAULT false,
+    "Wip"                  boolean DEFAULT false,
+    "Prototype"            boolean DEFAULT false,
+    "Production"           boolean DEFAULT false,
+    "Phantom"              boolean NOT NULL DEFAULT false,
+    "BulkIssue"            boolean NOT NULL DEFAULT false,
+    "NeedSave"             boolean DEFAULT false,
+    "NonStock"             boolean NOT NULL DEFAULT true,
+    "Module"               boolean NOT NULL DEFAULT false,
+    "Reserved"             boolean NOT NULL DEFAULT false,
+    "ReservedBy"           varchar(50),
+
+    -- SQL Server [nvarchar](max) -> PostgreSQL text
+    "Notes"                text,
+    "Price"                numeric(15, 5) DEFAULT 0,
+    "LabourCost"           numeric(15, 5) DEFAULT 0,
+    "MaterialCost"         numeric(15, 5) DEFAULT 0,
+    "MaterialCostCalculated" numeric(15, 5) DEFAULT 0,
+    "SourceCost"           numeric(15, 5) DEFAULT 0,
+    "MiscCost"             numeric(15, 5) DEFAULT 0,
+    "Path"                 varchar(255),
+    "LeadTime"             integer,
+    "Location"             varchar(50),
+
+    "MinStock"             numeric(10, 3) DEFAULT 0,
+    "MaxStock"             numeric(10, 3) DEFAULT 0,
+    "CurrentStock"         numeric(10, 3) DEFAULT 0,
+    "WipStock"             numeric(10, 3) DEFAULT 0,
+    "AllocatedStock"       numeric(10, 3) DEFAULT 0,
+    "OrderStock"           numeric(10, 3) DEFAULT 0,
+    "IssuedStock"          numeric(10, 3) DEFAULT 0,
+    "ReorderStock"         numeric(10, 3) DEFAULT 0,
+    "BackorderStock"       numeric(10, 3) DEFAULT 0,
+
+    "Origin"               varchar(50) DEFAULT 'B',
+    "ChildCost"            boolean NOT NULL DEFAULT true,
+    "ActionNo"             integer,
+    "ActionNoPending"      varchar(50),
+    "ActionNoIsPending"    boolean NOT NULL DEFAULT false,
+    "ActionNoRetire"       varchar(50),
+    "ChangeNotes"          text,
+    "ReplacesPartNo"       varchar(255),
+    "ReplacesRev"          real,
+    "ReplacedByPartNo"     varchar(255),
+    "ReplacedByRev"        real,
+
+    "NotReleased"          boolean NOT NULL DEFAULT false,
+    "ModelDriven"          varchar(50),
+    "Software"             varchar(50),
+    "Filename"             varchar(255),
+    "OriginalFilename"     varchar(255),
+    "OriginalSize"         integer,
+    "CadType"              varchar(50),
+    "FamilyName"           varchar(50),
+    "ModelName"            varchar(255),
+    "Alpha"                varchar(50),
+    "Warehouse"            varchar(50),
+    "OldStock"             varchar(50),
+    "NewStock"             varchar(50),
+    "UsedOn"               text,
+    "FileByteCount"        bigint,
+    "RevisedBy"            varchar(50),
+    "RevisedOn"            timestamp,
+    "LastSavedBy"          varchar(50),
+    "LastSavedOn"          timestamp,
+    "PUnitMeasure"         varchar(50),
+    "UUnitMeasure"         varchar(50),
+    "Buyer"                varchar(50),
+    "Cycle"                real,
+    "Crc"                  varchar(50),
+
+    "Version"              integer DEFAULT 0,
+    "Priority"             integer,
+    "TaxCode"              varchar(50),
+    "NominalAccount"       varchar(50),
+    "TaxCodeSales"         varchar(50),
+    "NominalAccountSales"  varchar(50),
+    "Family"               varchar(50),
+    "Supplier"             varchar(50),
+    "PaintCode"            varchar(50),
+    "Factor"               numeric(10, 3) DEFAULT 1,
+    "UnitConversion"       numeric(15, 5) DEFAULT 1,
+    "AbcClass"             varchar(1),
+    "AbcClass1"            varchar(1),
+    "CutLhs"               numeric(10, 3),
+    "CutRhs"               numeric(10, 3),
+    "CutProfile"           varchar(50),
+    "MaterialStandard"     varchar(255),
+    "Commodity"            varchar(50),
+    "ProductClass"         varchar(50),
+    "QapProcess"           varchar(50),
+    "RequireInspection"    boolean NOT NULL DEFAULT false,
+    "SeparateWorkOrder"    boolean NOT NULL DEFAULT false,
+    "Inseparable"          boolean NOT NULL DEFAULT false,
+    "SerialNoSensitive"    boolean NOT NULL DEFAULT false,
+    "CompanyId"            integer,
+
+    -- SQL Server [int] IDENTITY -> PostgreSQL generated identity
+    "RowId"                integer GENERATED ALWAYS AS IDENTITY NOT NULL,
+
+    -- SQL Server [timestamp] (rowversion) -> PostgreSQL bytea (approx)
+    "Timestamp"            bytea,
+
+    -- More uniqueidentifiers
+    "ProcessTemplateId"    uuid,
+    "WorkCentresComplete"  boolean NOT NULL DEFAULT false,
+    "NoDiscount"           boolean NOT NULL DEFAULT false,
+    "StockUnitOfMeasureId" uuid,
+    "SalesUoMId"           uuid,
+    "StockToSalesUoMConversion" numeric(15, 5),
+    "SalesTaxCodeId"       uuid,
+    "SalesNominalCodeId"   uuid,
+    "PurchaseUoMId"        uuid,
+    "PurchaseToStockUoMConversion" numeric(15, 5),
+    "PurchaseTaxCodeId"    uuid,
+    "PurchaseNominalCodeId" uuid,
+    "Finish"               varchar(255),
+    "ReverseKitted"        boolean NOT NULL DEFAULT false,
+    "WorkcentreProcessTemplateId" uuid,
+    "Type"                 varchar(255),
+    "OverridePermissionInheritance" boolean NOT NULL DEFAULT false,
+    "Colour"               varchar(50),
+    "UnitConversion2"      numeric(15, 5) DEFAULT 1,
+    "FinishedGoods"        boolean NOT NULL DEFAULT false,
+    "IsKit"                boolean NOT NULL DEFAULT false,
+    "Serviceable"          boolean NOT NULL DEFAULT false,
+    "SUnitMeasure"         varchar(50),
+    "Country"              varchar(255),
+    "ExcludeChildren"      boolean NOT NULL DEFAULT false,
+
+    -- PRIMARY KEY on ItemId
+    CONSTRAINT "PK_Item" PRIMARY KEY ("ItemId")
+);
+
+------------------------------------------------------------------------------
+-- Foreign key constraints (requires referenced tables to exist in public schema)
+------------------------------------------------------------------------------
+
+ALTER TABLE public."Item"
+  ADD CONSTRAINT "FK_Item_PurchaseNominalCode"
+  FOREIGN KEY ("PurchaseNominalCodeId")
+  REFERENCES public."NominalCode" ("NominalCodeId");
+
+ALTER TABLE public."Item"
+  ADD CONSTRAINT "FK_Item_PurchaseTaxCode"
+  FOREIGN KEY ("PurchaseTaxCodeId")
+  REFERENCES public."TaxCode" ("TaxCodeId");
+
+ALTER TABLE public."Item"
+  ADD CONSTRAINT "FK_Item_PurchaseUnitMeasure"
+  FOREIGN KEY ("PurchaseUoMId")
+  REFERENCES public."UnitMeasure" ("UnitMeasureId");
+
+ALTER TABLE public."Item"
+  ADD CONSTRAINT "FK_Item_SalesNominalCode"
+  FOREIGN KEY ("SalesNominalCodeId")
+  REFERENCES public."NominalCode" ("NominalCodeId");
+
+ALTER TABLE public."Item"
+  ADD CONSTRAINT "FK_Item_SalesTaxCode"
+  FOREIGN KEY ("SalesTaxCodeId")
+  REFERENCES public."TaxCode" ("TaxCodeId");
+
+ALTER TABLE public."Item"
+  ADD CONSTRAINT "FK_Item_SalesUnitMeasure"
+  FOREIGN KEY ("SalesUoMId")
+  REFERENCES public."UnitMeasure" ("UnitMeasureId");
+
+ALTER TABLE public."Item"
+  ADD CONSTRAINT "FK_Item_StockUnitMeasure"
+  FOREIGN KEY ("StockUnitOfMeasureId")
+  REFERENCES public."UnitMeasure" ("UnitMeasureId");
+
+
