@@ -1,4 +1,8 @@
-
+DATABASE_SERVER=dungannon.mallaghangroup.com
+DATABASE_PORT=1433
+DATABASE_USER=automate.io
+DATABASE_PASSWORD=Sense-Allow-Fifth5
+DATABASE_NAME=pulseplm
 
 
 
