@@ -5,7 +5,9 @@ DATABASE_PASSWORD=Sense-Allow-Fifth5
 DATABASE_NAME=pulseplm
 
 
-
+DATABASE_URL="postgresql://postgres:Wagvl1chorchana123@localhost:5432/mlatest"
+CLICKUP_API_TOKEN=pk_6892998_YCS484IIRPIJETOC2YDOUKU0NJW0BEJ6
+CLICKUP_LIST_ID=901205874562
 
 
 USE [pulseplm]
