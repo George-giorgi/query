@@ -1,3 +1,13 @@
+automate.io
+Password: Sense-Allow-Fifth5
+Hostname: dungannon.mallaghangroup.com
+Port: 1433
+Database: pulseplm
+
+
+
+
+
 -- Make sure you're using the correct database:
 -- \c your_database_name;
 
