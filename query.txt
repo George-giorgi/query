@@ -1,3 +1,50 @@
+WITH task_durations AS (
+    SELECT 
+        t1.createdby,
+        t1.completedby AS task_start,
+        LEAD(t1.completedby) OVER (PARTITION BY t1.createdby ORDER BY t1.completedby) AS task_end,
+        c.clock_in,
+        c.clock_out
+    FROM tasks t1
+    JOIN employees c ON t1.createdby = c.employee_id
+),
+work_hours_filtered AS (
+    SELECT 
+        td.createdby,
+        td.task_start,
+        td.task_end,
+        td.clock_in,
+        td.clock_out,
+        GREATEST(td.task_start, td.clock_in) AS work_start,
+        LEAST(td.task_end, td.clock_out) AS work_end
+    FROM task_durations td
+    WHERE td.task_end IS NOT NULL -- ბოლო Task არ უნდა ჩავთვალოთ
+),
+final_calculation AS (
+    SELECT 
+        whf.createdby,
+        whf.task_start,
+        whf.task_end,
+        whf.work_start,
+        whf.work_end,
+        -- სამუშაო დრო საათებში
+        EXTRACT(EPOCH FROM (whf.work_end - whf.work_start)) / 3600 
+        -- გამოვაკლოთ შესვენება მხოლოდ მაშინ, თუ ის შედის სამუშაო შუალედში
+        - CASE 
+            WHEN whf.work_start <= whf.work_start::DATE + INTERVAL '10:45' 
+             AND whf.work_end >= whf.work_start::DATE + INTERVAL '10:30' 
+            THEN 15 / 60.0 ELSE 0 END
+        - CASE 
+            WHEN whf.work_start <= whf.work_start::DATE + INTERVAL '14:00' 
+             AND whf.work_end >= whf.work_start::DATE + INTERVAL '13:30' 
+            THEN 30 / 60.0 ELSE 0 END
+        AS usedtime
+    FROM work_hours_filtered whf
+)
+UPDATE tasks t
+SET usedtime = fc.usedtime
+FROM final_calculation fc
+WHERE t.completedby = fc.task_start AND t.createdby = fc.createdby;
 
 ////////
 
