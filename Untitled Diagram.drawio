@@ -7,14 +7,14 @@
         <mxCell id="EFj9_kPtd9XkNFgS6SFH-1" value="table: face-user&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;username (use for join to(task-time)&lt;/div&gt;&lt;div&gt;emp_id&lt;/div&gt;&lt;div&gt;date_and_time (face scan)&lt;/div&gt;" style="whiteSpace=wrap;html=1;aspect=fixed;align=left;verticalAlign=top;" parent="1" vertex="1">
           <mxGeometry x="140" y="110" width="160" height="160" as="geometry" />
         </mxCell>
-        <mxCell id="EFj9_kPtd9XkNFgS6SFH-2" value="table: task-time&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;ComplatedBy (key for join to face-user)&lt;/div&gt;&lt;div&gt;ComplatedOn (task times)&lt;/div&gt;&lt;div&gt;Workcentre (line)&lt;/div&gt;" style="whiteSpace=wrap;html=1;aspect=fixed;align=left;verticalAlign=top;" parent="1" vertex="1">
+        <mxCell id="EFj9_kPtd9XkNFgS6SFH-2" value="table: task-time&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;ComplatedBy (key for join to face-user)&lt;/div&gt;&lt;div&gt;ComplatedOn (task times)&lt;/div&gt;&lt;div&gt;Workcentre (line)&lt;/div&gt;&lt;div&gt;ComplatedQty&lt;/div&gt;&lt;div&gt;PartNo&lt;/div&gt;&lt;div&gt;Rev&lt;/div&gt;" style="whiteSpace=wrap;html=1;aspect=fixed;align=left;verticalAlign=top;" parent="1" vertex="1">
           <mxGeometry x="355" y="110" width="160" height="160" as="geometry" />
         </mxCell>
-        <mxCell id="EFj9_kPtd9XkNFgS6SFH-3" value="table from linked server" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="1" vertex="1">
-          <mxGeometry x="135" y="70" width="150" height="30" as="geometry" />
+        <mxCell id="EFj9_kPtd9XkNFgS6SFH-3" value="View-table" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="1" vertex="1">
+          <mxGeometry x="170" y="70" width="80" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="EFj9_kPtd9XkNFgS6SFH-4" value="table from linked server" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="1" vertex="1">
-          <mxGeometry x="355" y="70" width="150" height="30" as="geometry" />
+        <mxCell id="EFj9_kPtd9XkNFgS6SFH-4" value="View-table" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="1" vertex="1">
+          <mxGeometry x="390" y="70" width="80" height="30" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
